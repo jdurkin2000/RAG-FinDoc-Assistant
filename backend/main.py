@@ -1,28 +1,13 @@
-from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from dotenv import load_dotenv
-from anthropic import AsyncAnthropic
-import os
 import asyncio
+from langchain_anthropic import ChatAnthropic
 
-@asynccontextmanager
-async def lifespan(app: FastAPI):
-    load_dotenv()
-    yield
-
-anthropic = AsyncAnthropic(api_key=os.getenv("CLAUDE_API_KEY"))
-app = FastAPI(lifespan=lifespan)
+load_dotenv()
+anthropic = ChatAnthropic(model="claude-haiku-4-5")
+app = FastAPI()
 
 @app.get("/")
 async def root():
-    response = await anthropic.messages.create(
-        model="claude-haiku-4-5",
-        messages=[
-            {
-                "role": "user",
-                "content": "Hello, how are you?"
-            }
-        ],
-        max_tokens=1000
-    )
-    return {"message": response.content[0].text}
+    response = anthropic.invoke("Hello, how are you?")
+    return {"message": response}
