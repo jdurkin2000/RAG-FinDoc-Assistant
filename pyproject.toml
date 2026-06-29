@@ -1,9 +1,12 @@
 [project]
 name = "rag-findoc-assistant"
 version = "0.1.0"
-description = "Add your description here"
+description = "A RAG-powered financial document assistant that uses real, publicly available documents to answer relevant queries"
 readme = "README.md"
 requires-python = ">=3.13"
+authors = [
+    {name = "James Durkin", email= "durkin.jfd@gmail.com"}
+]
 dependencies = [
     "anthropic[aiohttp]>=0.112.0",
     "fastapi[standard]>=0.138.1",
@@ -12,10 +15,10 @@ dependencies = [
     "langchain-chroma>=1.1.0",
     "langchain-ollama>=1.1.0",
     "langchain-text-splitters>=1.1.2",
+    "pydantic>=2.13.4",
+    "pydantic-settings>=2.14.2",
     "pymupdf>=1.27.2.3",
-    "python-dotenv>=1.2.2",
-    "tiktoken>=0.13.0",
 ]
 
 [tool.fastapi]
-entrypoint = "backend.main:app"
+entrypoint = "app.main:app"
